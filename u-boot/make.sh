@@ -31,14 +31,14 @@ RKCHIP_INI_DESC=("CONFIG_TARGET_GVA_RK3229       NA          RK322XAT     NA"
 RKBIN_TOOLS=../rkbin/tools
 
 # User's GCC toolchain and relative path
-ADDR2LINE_ARM32=arm-linux-gnueabihf-addr2line
-ADDR2LINE_ARM64=aarch64-linux-gnu-addr2line
-OBJ_ARM32=arm-linux-gnueabihf-objdump
-OBJ_ARM64=aarch64-linux-gnu-objdump
-GCC_ARM32=arm-linux-gnueabihf-
-GCC_ARM64=aarch64-linux-gnu-
-TOOLCHAIN_ARM32=../prebuilts/gcc/linux-x86/arm/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin
-TOOLCHAIN_ARM64=../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin
+ADDR2LINE_ARM32=arm-none-linux-gnueabihf-addr2line
+ADDR2LINE_ARM64=aarch64-none-linux-gnu-addr2line
+OBJ_ARM32=arm-none-linux-gnueabihf-objdump
+OBJ_ARM64=aarch64-none-linux-gnu-objdump
+GCC_ARM32=arm-none-linux-gnueabihf-
+GCC_ARM64=aarch64-none-linux-gnu-
+TOOLCHAIN_ARM32=../prebuilts/gcc/linux-x86/arm/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/bin
+TOOLCHAIN_ARM64=../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
 
 ########################################### User not touch #############################################
 BIN_PATH_FIXUP="--replace tools/rk_tools/ ./"

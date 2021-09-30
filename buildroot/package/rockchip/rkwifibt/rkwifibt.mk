@@ -141,7 +141,7 @@ ifeq ($(call qstrip,$(BR2_ARCH)),aarch64)
 define RKWIFIBT_BUILD_CMDS
     $(MAKE) -C $(@D)/realtek/rtk_hciattach/ CC=$(TARGET_CC)
     $(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(TOPDIR)/../kernel/ M=$(@D)/realtek/bluetooth_uart_driver ARCH=arm64 \
-            CROSS_COMPILE=$(TOPDIR)/../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+            CROSS_COMPILE=$(TOPDIR)/../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
 endef
 endif
 
@@ -149,7 +149,7 @@ ifeq ($(call qstrip,$(BR2_ARCH)),arm)
 define RKWIFIBT_BUILD_CMDS
     $(MAKE) -C $(@D)/realtek/rtk_hciattach/ CC=$(TARGET_CC)
     $(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(TOPDIR)/../kernel/ M=$(@D)/realtek/bluetooth_uart_driver ARCH=arm \
-            CROSS_COMPILE=$(TOPDIR)/../prebuilts/gcc/linux-x86/arm/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+            CROSS_COMPILE=$(TOPDIR)/../prebuilts/gcc/linux-x86/arm/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
 endef
 endif
 

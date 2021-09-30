@@ -6,8 +6,8 @@ WORK_DIR_TOP=$(cd `dirname $0` ; pwd)
 #./build.sh 6464 to compile CA TA with 64 bits
 #./build.sh 6432 to compile CA with 64 bits and TA with 32 bits
 
-AARCH64_TOOLCHAIN=$WORK_DIR_TOP/../../../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
-ARM32_TOOLCHAIN=$WORK_DIR_TOP/../../../prebuilts/gcc/linux-x86/arm/gcc-linaro-arm-linux-gnueabihf-4.9-2014.05_linux/bin/arm-linux-gnueabihf-
+AARCH64_TOOLCHAIN=$WORK_DIR_TOP/../../../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+ARM32_TOOLCHAIN=$WORK_DIR_TOP/../../../prebuilts/gcc/linux-x86/arm/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-
 
 make TA_DEV_KIT_DIR=$WORK_DIR_TOP/export-user_ta clean
 export BUILD_CA=y
