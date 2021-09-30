@@ -1,0 +1,3 @@
+config BR2_PACKAGE_MODBUS_UTILS
+bool "modbus utils: include client and server"
+    select BR2_PACKAGE_LIBMODBUS

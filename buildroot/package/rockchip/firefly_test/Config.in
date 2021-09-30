@@ -1,0 +1,4 @@
+config BR2_PACKAGE_FIREFLY_TEST
+    select BR2_PACKAGE_OPENSSL
+    select BR2_PACKAGE_COREUTILS
+    bool "Firefly test tool"

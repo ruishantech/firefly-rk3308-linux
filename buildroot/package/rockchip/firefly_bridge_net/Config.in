@@ -1,0 +1,8 @@
+config BR2_PACKAGE_FIREFLY_BRIDGE_NET
+    bool "firefly bridge net"
+    select BR2_PACKAGE_BRIDGE_UTILS
+    select BR2_PACKAGE_DHCP
+    select BR2_PACKAGE_DHCP_SERVER
+    select BR2_PACKAGE_DHCP_CLIENT
+	help
+        Based on rk3308, bridge eth0, eth1 to virtual network interface br0.

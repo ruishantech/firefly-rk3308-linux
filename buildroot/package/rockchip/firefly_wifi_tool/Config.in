@@ -1,0 +1,5 @@
+config BR2_PACKAGE_FIREFLY_WIFI_TOOL
+    bool "firefly wifi tool"
+    select BR2_PACKAGE_DHCP
+    select BR2_PACKAGE_DHCP_SERVER
+    select BR2_PACKAGE_DHCP_CLIENT

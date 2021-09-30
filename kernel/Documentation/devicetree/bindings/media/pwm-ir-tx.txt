@@ -1,0 +1,13 @@
+Device-Tree bindings for PWM IR transmit
+
+Required properties:
+	- compatible: should be "pwm-ir-tx".
+	- pwms: specifies PWM used for sent IR signal.
+
+
+Example node:
+
+	ir_tx {
+                compatible = "pwm-ir-tx";
+                pwms = <&pwm1 0 25000 0>;
+	};

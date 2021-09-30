@@ -1,0 +1,5 @@
+config BR2_PACKAGE_ADBD
+	bool "adbd porting for Linux"
+	depends on BR2_USE_MMU # uses fork()
+    select BR2_PACKAGE_OPENSSL
+    select BR2_PACKAGE_ZLIB

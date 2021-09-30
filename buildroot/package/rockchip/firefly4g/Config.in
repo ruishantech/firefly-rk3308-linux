@@ -1,0 +1,8 @@
+config BR2_PACKAGE_FIREFLY4G
+        bool "setup data connection for 4G module EC20"
+        depends on BR2_PACKAGE_DHCPCD # uses fork()
+
+if BR2_PACKAGE_FIREFLY4G
+	config BR2_PACKAGE_EC20HOTPLUG
+		bool "usb hot plug for 4G module EC20"
+endif

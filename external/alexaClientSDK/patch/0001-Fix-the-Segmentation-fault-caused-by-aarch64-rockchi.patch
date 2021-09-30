@@ -1,0 +1,35 @@
+From 0db756445d53c55c96036314885776b9071f9ddc Mon Sep 17 00:00:00 2001
+From: Guanzl <service@t-firefly.com>
+Date: Sat, 27 Oct 2018 15:40:24 +0800
+Subject: [PATCH 1/2] Fix the Segmentation fault caused by
+ aarch64-rockchip-linux-gnu-g++ that configured with --disable-__cxa_atexit,
+ when Using TLS in the class.function{}
+
+---
+ AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h b/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h
+index 5cc56e3..5f9c27f 100644
+--- a/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h
++++ b/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h
+@@ -50,6 +50,8 @@ private:
+     std::string m_moniker;
+ };
+ 
++static thread_local ThreadMoniker m_threadMoniker;
++
+ const std::string ThreadMoniker::getThisThreadMoniker() {
+ #ifdef _WIN32
+     std::ostringstream winThreadID;
+@@ -57,7 +59,6 @@ const std::string ThreadMoniker::getThisThreadMoniker() {
+     return winThreadID.str();
+ #else
+     /// Per-thread static instance so that @c m_threadMoniker.m_moniker is @c std::this_thread's moniker.
+-    static thread_local ThreadMoniker m_threadMoniker;
+ 
+     return m_threadMoniker.m_moniker;
+ #endif
+-- 
+2.7.4
+

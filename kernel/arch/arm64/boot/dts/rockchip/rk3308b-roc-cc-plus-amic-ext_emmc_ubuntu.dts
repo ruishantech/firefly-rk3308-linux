@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ */
+
+/dts-v1/;
+
+#include "rk3308b-firefly.dtsi"
+#include "rk3308b-roc-cc-plus.dtsi"
+#include "rk3308b-roc-cc-plus-ext.dtsi"
+
+/ {
+    model = "Firefly ROC-RK3308B-CC-PLUS analog mic ext board";
+    compatible = "firefly,rk3308b-roc-cc-plus-amic-ext_emmc", "firefly,rk3308", "rockchip,rk3308";
+
+    chosen {
+        bootargs = "earlycon=uart8250,mmio32,0xff0e0000 swiotlb=1 console=ttyFIQ0 root=PARTUUID=614e0000-0000 rw rootfstype=ext4 rootwait snd_aloop.index=7 snd_aloop.use_raw_jiffies=1";
+    };
+};
+

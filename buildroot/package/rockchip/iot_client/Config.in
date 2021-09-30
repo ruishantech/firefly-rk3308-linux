@@ -1,0 +1,5 @@
+config BR2_PACKAGE_IOT_CLIENT
+bool "iot_client app"
+    select BR2_PACKAGE_LIBMODBUS
+    select BR2_PACKAGE_PAHO_MQTT_C
+    select BR2_PACKAGE_ZLOG

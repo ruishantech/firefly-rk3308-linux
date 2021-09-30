@@ -1,0 +1,11 @@
+{
+	"cloud":	{
+		"type":	"aliyun",
+		"configuration":	"aliyun_normal.json"
+	},
+	"connectors":	[{
+			"name":	"modbus_serial",
+			"type":	"modbus",
+			"configuration":	"modbus_serial.json"
+		}]
+}

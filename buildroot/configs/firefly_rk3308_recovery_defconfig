@@ -1,0 +1,6 @@
+#include "rk3308_arm.config"
+#include "base.config"
+#include "base_extra.config"
+#include "recovery.config"
+BR2_PACKAGE_UPDATE=y
+BR2_PACKAGE_RKUPDATE=y

@@ -1,0 +1,28 @@
+From 187b17755e756ad3c4aa66e1e4aa5e8db03bdbe2 Mon Sep 17 00:00:00 2001
+From: Guanzl <service@t-firefly.com>
+Date: Sat, 27 Oct 2018 15:46:49 +0800
+Subject: [PATCH 2/2] Building with KITT.ai, use openblas library replace of
+ blas
+
+---
+ KWD/KittAi/src/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/KWD/KittAi/src/CMakeLists.txt b/KWD/KittAi/src/CMakeLists.txt
+index dc7744f..49fae87 100644
+--- a/KWD/KittAi/src/CMakeLists.txt
++++ b/KWD/KittAi/src/CMakeLists.txt
+@@ -7,7 +7,7 @@ target_include_directories(KITTAI PUBLIC
+ 	"${KWD_SOURCE_DIR}/include"
+ 	"${KITTAI_SOURCE_DIR}/include")
+ 
+-target_link_libraries(KITTAI KWD AVSCommon "${KITTAI_KEY_WORD_DETECTOR_LIB_PATH}" blas)
++target_link_libraries(KITTAI KWD AVSCommon "${KITTAI_KEY_WORD_DETECTOR_LIB_PATH}" openblas)
+ 
+ # install target
+-asdk_install()
+\ No newline at end of file
++asdk_install()
+-- 
+2.7.4
+

@@ -1,0 +1,191 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ */
+
+/dts-v1/;
+
+#include "rk3308b-firefly.dtsi"
+#include "rk3308b-rgb_4.0inch_ST7701S.dtsi"
+
+/ {
+	model = "Firefly ROC-RK3308B-CC analog mic rgb_4.0inch board";
+	compatible = "firefly,rk3308b-roc-cc-amic-rgb_4.0inch_emmc", "firefly,rk3308", "rockchip,rk3308";
+
+	chosen {
+                bootargs = "earlycon=uart8250,mmio32,0xff0c0000 swiotlb=1 console=ttyFIQ0 root=PARTUUID=614e0000-0000 rw rootfstype=ext4 rootwait snd_aloop.index=7";
+        };
+
+	pdm_i2s_dais: pdm-i2s-dais {
+		status = "disabled";
+		compatible = "rockchip,rk3308-multi-dais", "rockchip,multi-dais";
+		dais = <&pdm_8ch>, <&i2s_8ch_2>;
+		capture,channel-mapping = <6 2>;
+		playback,channel-mapping = <0 2>;
+		bitclock-inversion = <1 0>;
+	};
+
+	pdm-mic-array {
+		status = "disabled";
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "rockchip,pdm-mic-array";
+		simple-audio-card,cpu {
+			sound-dai = <&pdm_8ch>;
+		};
+		simple-audio-card,codec {
+			sound-dai = <&dummy_codec>;
+		};
+	};
+
+	vad-sound {
+		status = "disabled";
+		compatible = "rockchip,multicodecs-card";
+		rockchip,card-name = "rockchip,rk3308-vad";
+		rockchip,cpu = <&pdm_i2s_dais>;
+		rockchip,codec = <&acodec>, <&vad>;
+	};
+
+        vad_acodec_sound: vad-acodec-sound {
+                status = "okay";
+                compatible = "rockchip,multicodecs-card";
+                rockchip,card-name = "rockchip,rk3308b-acodec";
+                rockchip,codec-hp-det;
+                rockchip,mclk-fs = <256>;
+                rockchip,cpu = <&i2s_8ch_2>;
+                rockchip,codec = <&acodec>, <&vad>;
+        };
+
+	ir_rx {
+                status = "okay";
+                compatible = "gpio-ir-receiver";
+                gpios = <&gpio0 RK_PC0 GPIO_ACTIVE_HIGH>;
+                pinctrl-names = "default";
+		pinctrl-0 = <&ir_recv_pin>;
+        };
+
+        ir_tx {
+                status = "okay";
+                compatible = "pwm-ir-tx";
+                pwms = <&pwm5 0 25000 0>;
+        };
+
+    	leds {
+        	status = "okay";
+        	compatible = "gpio-leds";
+        	power {
+            		label = "firefly:red:power"; 
+            		linux,default-trigger = "ir-power-click";
+            		default-state = "on";
+            		gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+        };
+
+        user {
+        	label = "firefly:blue:user";
+        	linux,default-trigger = "ir-user-click";
+        	default-state = "off";
+            	gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_HIGH>;
+        };
+    };
+};
+
+&acodec_sound {
+    status = "disabled";
+};
+
+&acodec {
+    rockchip,micbias1;
+    rockchip,micbias2;
+    rockchip,en-always-grps = <0 1 2 3>;
+    rockchip,adc-grps-route = <1 0 3 2>;
+    /delete-property/rockchip,loopback-grp;
+};
+
+&pwm5 {
+    status = "okay";
+    pinctrl-names = "active";
+    pinctrl-0 = <&pwm5_pin_pull_down>;
+};
+
+&bluetooth_sound {
+    status = "disabled";
+};
+
+&i2s_2ch_0 {
+    status = "disabled";
+    #sound-dai-cells = <0>;
+    rockchip,clk-trcm = <1>;
+};
+
+&pdm_8ch {
+    status = "disabled";
+    #sound-dai-cells = <0>;
+    rockchip,no-dmaengine;
+    pinctrl-names = "default";
+    pinctrl-0 = <&pdm_m2_clk
+        	 &pdm_m2_clkm
+		 &pdm_m2_sdi0
+		 &pdm_m2_sdi1
+		 &pdm_m2_sdi2
+		 &pdm_m2_sdi3>;
+};
+
+&vad {
+    status = "okay";
+    rockchip,audio-src = <&i2s_8ch_2>;
+    rockchip,det-channel = <0>;
+    rockchip,mode = <1>;
+    rockchip,buffer-time-ms = <200>;
+    #sound-dai-cells = <0>;
+};
+
+&i2s_8ch_2 {
+    status = "okay";
+};
+
+&pdm_i2s_dais {
+    status = "disabled";
+    #sound-dai-cells = <0>;
+};
+
+&emmc {
+    status = "okay";
+};
+
+&nandc {
+    status = "disabled";
+};
+
+&fiq_debugger {
+    status = "okay";
+    pinctrl-names = "default";
+    //pinctrl-0 = <&uart2m0_xfer>;
+};
+
+&sdmmc {
+    status = "okay";
+};
+
+&vccio_sd {
+    gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_HIGH>;
+};
+
+&mac {
+    status = "okay";
+};
+
+&vbus_host {
+    status = "okay";
+    enable-active-low;
+};
+
+&gpio_keys {
+    status = "disabled";
+};
+
+&tas5731 {
+    status = "disabled";
+};
+
+&is31fl3236 {
+    status = "disabled";
+};

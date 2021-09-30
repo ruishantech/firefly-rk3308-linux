@@ -1,0 +1,6 @@
+config BR2_PACKAGE_FIREFLY_CHOOSE_ROOTFS
+    bool "choose_rootfs"
+	help
+      This is a tool for switching between multiple rootfs. 
+      Currently only supports buildroot and ubutntu switching.
+      Note that it is dangerous if your sdk doesn't support multiple rootfs.

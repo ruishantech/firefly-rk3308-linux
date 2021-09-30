@@ -1,0 +1,9 @@
+{
+    "region": "cn-shanghai",
+    "is_public_instance" : true,
+    "is_dynreg" : false,
+    "is_data_mode" : true,
+    "product_key" : "a1lrT6i2bBF",
+    "device_name" : "rk3308_1",
+    "device_secret" : "8a313b03c4ad7c13fc4a3ed8304b7f7d"
+}

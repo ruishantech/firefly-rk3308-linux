@@ -1,0 +1,22 @@
+FIREFLY_CHOOSE_ROOTFS_VERSION = master
+FIREFLY_CHOOSE_ROOTFS_SITE_METHOD = local
+FIREFLY_CHOOSE_ROOTFS_SITE = $(TOPDIR)/../external/firefly_choose_rootfs
+
+define FIREFLY_CHOOSE_ROOTFS_BUILD_CMDS
+    $(TARGET_MAKE_ENV) $(MAKE) CC=$(TARGET_CC) CXX=$(TARGET_CXX) -C $(@D)
+endef
+
+define FIREFLY_CHOOSE_ROOTFS_CLEAN_CMDS
+    $(TARGET_MAKE_ENV) $(MAKE) -C $(@D) clean
+endef
+
+define FIREFLY_CHOOSE_ROOTFS_INSTALL_TARGET_CMDS
+    $(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+endef
+
+define FIREFLY_CHOOSE_ROOTFS_UNINSTALL_TARGET_CMDS
+    $(TARGET_MAKE_ENV) $(MAKE) -C $(@D) uninstall
+endef
+
+$(eval $(generic-package))
+

@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+#
+
+if [ -e /etc/firefly_bridge/bridge_config ];then
+    source /etc/firefly_bridge/bridge_config
+else
+    return 0
+fi
+
+if [ $ENABLE == "0" ];then
+    return 0
+fi
+
+case "$1" in
+    start)
+        printf "Starting bridge: "
+        /usr/bin/bridge_init.sh
+        [ $? = 0 ] && echo "OK" || echo "FAIL"
+        ;;
+    stop)
+        printf "Stopping bridge: "
+        /usr/bin/bridge_deinit.sh
+        [ $? = 0 ] && echo "OK" || echo "FAIL"
+        ;;
+    restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit $?

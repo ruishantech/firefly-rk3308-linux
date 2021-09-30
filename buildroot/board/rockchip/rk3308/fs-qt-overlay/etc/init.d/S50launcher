@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Start linux launcher...
+#
+
+case "$1" in
+  start)
+		printf "Starting launcher: "
+		export LC_ALL='zh_CN.utf8'
+		export QT_QPA_PLATFORM=linuxfb
+		export QMLSCENE_DEVICE=softwarecontext
+
+		# music
+		/usr/bin/audioservice &
+
+		#for fbdevsink
+		export QT_GSTREAMER_WINDOW_VIDEOSINK=fbdevsink
+
+		sleep 1
+		/usr/local/QLauncher/QLauncher &
+
+	;;
+  stop)
+		killall QLauncher
+		killall audioservice
+		printf "stop finished"
+        ;;
+  *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac
+exit 0

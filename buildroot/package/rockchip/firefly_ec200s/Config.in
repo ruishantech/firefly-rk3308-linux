@@ -1,0 +1,5 @@
+config BR2_PACKAGE_FIREFLY_EC200S
+    bool "firefly ec200s"
+	help
+        Based on rk3308.
+        Automatic dialing, and set the network data stream to usb0.

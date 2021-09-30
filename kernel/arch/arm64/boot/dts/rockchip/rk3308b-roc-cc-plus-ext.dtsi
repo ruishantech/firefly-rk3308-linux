@@ -1,0 +1,148 @@
+/ {
+    vcc3v3_4g_power: vcc3v3-4g-power-regulator {
+       compatible = "regulator-fixed";
+       enable-active-high;
+       regulator-always-on;
+       regulator-boot-on;
+       gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
+       pinctrl-names = "default";
+       pinctrl-0 = <&pcie_4g_power>;
+       regulator-name = "vcc3v3_4g_power";
+    };
+
+    vcc3v3_4g_reset: vcc3v3-4g-reset-regulator {
+       compatible = "regulator-fixed";
+       //enable-active-high;
+       regulator-always-on;
+       regulator-boot-on;
+       gpio = <&gpio4 RK_PA7 GPIO_ACTIVE_HIGH>;
+       pinctrl-names = "default";
+       pinctrl-0 = <&pcie_4g_reset>;
+       regulator-name = "vcc3v3_4g_reset";
+    };
+
+    mcp251x_clk: mcp251x-clk {
+        compatible = "fixed-clock";
+        #clock-cells = <0>;
+        clock-frequency = <8000000>;        //MCP2515_CAN模块的晶振为8MHz
+    };
+
+    leds {
+        status = "okay";
+        compatible = "gpio-leds";
+
+        L1 {
+            label = "firefly:green:L1";
+            gpios = <&gpio2 RK_PA7 GPIO_ACTIVE_HIGH>;
+        };
+
+        L2 {
+            label = "firefly:green:L2";
+            gpios = <&gpio2 RK_PA6 GPIO_ACTIVE_HIGH>;
+        };
+
+        L3 {
+            label = "firefly:green:L3";
+            gpios = <&gpio2 RK_PB3 GPIO_ACTIVE_HIGH>;
+        };
+
+        L4 {
+            label = "firefly:green:L4";
+            gpios = <&gpio2 RK_PB2 GPIO_ACTIVE_HIGH>;
+        };
+
+        L5 {
+            label = "firefly:green:L5";
+            gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_HIGH>;
+        };
+
+        L6 {
+            label = "firefly:green:L6";
+            gpios = <&gpio2 RK_PB4 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+};
+
+&spi0 {
+    status = "okay";
+    max-freq = <48000000>;
+    dev-port = <0>;
+    dma-names = "!tx", "!rx";       //关闭dma，否则uart在数据包大于等于32字节时会有丢包现象
+
+    spi_wk2xxx: spi_wk2xxx@00{                                                                                                                                                                                                              
+        status = "okay";
+        compatible = "firefly,spi-wk2xxx";
+        reg = <0x00>;
+        spi-max-frequency = <10000000>;
+        power-gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
+        reset-gpio = <&gpio1 RK_PC0 GPIO_ACTIVE_HIGH>;
+        irq-gpio = <&gpio1 RK_PC2 IRQ_TYPE_EDGE_FALLING>;
+        cs-gpio = <&gpio2 RK_PA3 GPIO_ACTIVE_HIGH>;
+        /* rk3399 driver support SPI_CPOL | SPI_CPHA | SPI_CS_HIGH */
+        //spi-cpha;             /* SPI mode: CPHA=1 */
+        //spi-cpol;     /* SPI mode: CPOL=1 */
+        //spi-cs-high;
+    };
+};
+
+&spi2 {
+    status = "okay";
+
+    mcp2515: can@00 {
+        status = "okay";
+        compatible = "microchip,mcp2515";
+        reg = <0x00>;
+        clocks = <&mcp251x_clk>;
+        interrupt-parent = <&gpio1>;
+        interrupts = <RK_PC4 IRQ_TYPE_EDGE_FALLING>;
+        spi-max-frequency = <24000000>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&can0_pins>;
+        poll_mode = <0>;
+        enable_dma = <1>;
+    };
+
+    spi_LoRa1276C1: lora1276C1@01 {
+        status = "disabled";
+        compatible = "firefly,lora1276";
+        reg = <0x01>;
+        spi-max-frequency = <10000000>;
+        //power-gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
+        //reset-gpio = <&gpio4 RK_PA7 GPIO_ACTIVE_LOW>;
+        irq-gpio = <&gpio4 RK_PA6 IRQ_TYPE_EDGE_FALLING>;
+        cs-gpio = <&gpio1 RK_PD1 GPIO_ACTIVE_LOW>;
+        sel-gpio=<&gpio1 RK_PB6 GPIO_ACTIVE_HIGH>;
+    };
+
+};
+
+&i2c3 {
+    status = "okay";
+    pinctrl-0 = <&i2c3m1_xfer>;
+    clock-frequency = <100000>;
+
+    n32s032: n32s032@50 {
+        compatible = "nations,n32s032";
+        reg = <0x50>;
+        status = "okay";
+    };
+};
+
+&pinctrl {
+    can0 {
+        can0_pins: can0-pins {
+            rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
+    pcie {
+        pcie_4g_power: pcie-4g-power {
+            rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
+        };
+
+        pcie_4g_reset: pcie-4g-reset {
+            rockchip,pins = <4 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
+};

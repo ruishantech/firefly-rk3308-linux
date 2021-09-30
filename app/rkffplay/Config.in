@@ -1,0 +1,3 @@
+menuconfig RV_TARGET_RKFFPLAY
+	bool "rockchip ffplay"
+	default n

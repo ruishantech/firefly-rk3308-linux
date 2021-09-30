@@ -1,0 +1,54 @@
+{
+	"name":	"modbus_serial",
+	"type":	"rtu",
+	"port":	"/dev/ttysWK0",
+	"stopbits":	1,
+	"bytesize":	8,
+	"parity":	"N",
+	"baudrate":	4800,
+	"devices":	[{
+			"unitId":	1,
+			"deviceName":	"RS_WS_N01",
+			"uploadInterval":	1000,
+			"cycleInterval":	1000,
+			"sendDataOnlyOnChange":	true,
+			"order":	"dcba",
+			"attributes":	[{
+					"tag":	"humidity",
+					"type":	"int16",
+					"rw_access":	"r",
+					"variableRangeConversion":	0.1,
+					"doubleDigit":	2,
+					"address":	40001
+				}, {
+					"tag":	"temperature",
+					"type":	"int16",
+					"variableRangeConversion":	0.1,
+					"doubleDigit":	2,
+					"rw_access":	"r",
+					"address":	40002
+				}]
+		}, {
+			"unitId":	2,
+			"deviceName":	"RS_WS_N02",
+			"uploadInterval":	1000,
+			"cycleInterval":	1000,
+			"sendDataOnlyOnChange":	false,
+			"order":	"dcba",
+			"attributes":	[{
+					"tag":	"humidity",
+					"type":	"int16",
+					"rw_access":	"r",
+					"variableRangeConversion":	0.1,
+					"doubleDigit":	2,
+					"address":	40001
+				}, {
+					"tag":	"temperature",
+					"type":	"int16",
+					"variableRangeConversion":	0.1,
+					"doubleDigit":	2,
+					"rw_access":	"r",
+					"address":	40002
+				}]
+		}]
+}

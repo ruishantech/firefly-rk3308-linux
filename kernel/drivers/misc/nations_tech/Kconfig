@@ -1,0 +1,18 @@
+menuconfig NATIONS_TECH
+	tristate "Nations Technologies"
+	default y
+	help
+	  This enables support for Nations Technologies.
+	  Nations Technologies Inc. (“Nations”) is a leader in China’s information security IC design industry and a national high-tech enterprise.
+
+if NATIONS_TECH
+
+comment "Nations Devices"
+
+config NATIONS_N32S032
+        bool "Nations N32S032"
+        default n
+        help
+          If you say yes here, nations n32s032 will be set using
+
+endif

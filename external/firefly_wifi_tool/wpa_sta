@@ -1,0 +1,69 @@
+#!/bin/bash
+NET_DEV=$1
+if [ -z "$NET_DEV" ];then
+    echo "Usage : wpa_sta net_dev"
+    echo "(example: wpa_sta wlan0"
+    echo "          wpa_sta wlx48d890facc8e)"
+    exit 1
+fi
+
+if ! ifconfig "$NET_DEV" &> /dev/null;then
+    echo "Unknown Net Interface : "$NET_DEV
+    exit 1
+fi
+
+# start wpa_supplicant
+if [ -z "$(ps -ef|grep wpa_supplicant|grep -v grep)" ];then
+    wpa_supplicant -B -i wlan0 -c /data/cfg/wpa_supplicant.conf
+fi
+
+# scanning
+echo "scanning essid ..."
+if ! wpa_cli -i "$NET_DEV" scan;then
+    echo "wpa_sta : scan network failed"
+    exit 1
+fi
+
+if ! wpa_cli -i "$NET_DEV" scan_result;then
+    echo "wpa_sta : scan_result failed"
+    exit 1
+fi
+
+if [ "$(wpa_cli -i "$NET_DEV" enable_network 0)" = FAIL ]; then
+    wpa_cli -i "$NET_DEV" add_network  &>/dev/null
+fi
+
+read -p "Choice wifi to connect:" wifiName
+read -p "password:" wifiPwd
+
+if ! wpa_cli -i "$NET_DEV" disable_network 0 ;then
+    echo "wpa_sta : disable_network 0 failed"
+    exit 1
+fi
+
+if ! wpa_cli -i "$NET_DEV" set_network 0 ssid "\"$wifiName\"";then
+    echo "wpa_sta : set_network ssid failed"
+    exit 1
+fi
+
+if ! wpa_cli -i "$NET_DEV" set_network 0 psk "\"$wifiPwd\"";then
+    echo "wpa_sta : set_network psk failed"
+    exit 1
+fi
+
+if ! wpa_cli -i "$NET_DEV" select_network 0;then
+    echo "wpa_sta : select_network 0 failed"
+    exit 1
+fi
+
+if ! wpa_cli -i "$NET_DEV" enable_network 0;then
+    echo "wpa_sta : enable_network 0 failed"
+    exit 1
+fi
+
+# get dhcp ip
+if which dhclient &> /dev/null;then
+    dhclient "$NET_DEV"
+else
+    udhcpc "$NET_DEV"
+fi

@@ -1,0 +1,18 @@
+
+################################################################################
+#
+# rkffplay
+#
+################################################################################
+
+RKFFPLAY_DEPENDENCIES = host-pkgconf librkfb librkrga
+
+RKFFPLAY_TARGET_FILES = $($(PKGNAME)_BUILDDIR)src/rkffplay
+
+# cause reconfigure if the timestamp of these files change
+RKFFPLAY_CONFIGURE_DEP_FILES = $($(PKGNAME)_PKGDIR)/src/CMakeLists.txt
+
+RKFFPLAY_CONF_OPTS =
+RKFFPLAY_CONF_OPTS += -DCONFIG_ROCKCHIP_PLATEFORM=rv1108
+
+$(eval $(rv-generic-cmake))

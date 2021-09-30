@@ -1,0 +1,82 @@
+{
+	"name":	"Modbus Server 1",
+	"type":	"tcp",
+	"host": "168.168.101.95",
+	"port":	502,
+	"devices":	[{
+			"unitId":	1,
+			"deviceName":	"Test Device A1",
+			"uploadInterval":	1000,
+			"cycleInterval":	1000,
+			"sendDataOnlyOnChange":	false,
+			"order":	"dcba",
+			"attributes":	[{
+					"tag":	"bit_coil_rw",
+					"type":	"bit",
+					"rw_access":	"rw",
+					"address":	4
+				}, {
+					"tag":	"bit_dis_read",
+					"type":	"bit",
+					"rw_access":	"r",
+					"address":	10004
+				}, {
+					"tag":	"int16_hold_read",
+					"type":	"int16",
+					"rw_access":	"rw",
+					"variableRangeConversion" : 10,
+					"doubleDigit" : 0,
+					"address":	40004
+				}, {
+					"tag":	"uint16_hold_read",
+					"type":	"uint16",
+					"variableRangeConversion" : 10,
+					"rw_access":	"rw",
+					"address":	40004
+				}, {
+					"tag":	"uint16_input_read",
+					"type":	"uint16",
+					"rw_access":	"r",
+					"address":	30004
+				}, {
+					"tag":	"uint32_hold_read",
+					"type":	"uint32",
+					"rw_access":	"rw",
+					"address":	40005
+				}, {
+					"tag":	"int32_hold_read",
+					"type":	"int32",
+					"rw_access":	"rw",
+					"address":	40005
+				}, {
+					"tag":	"float_hold_read",
+					"type":	"float",
+					"rw_access":	"rw",
+					"doubleDigit":	3,
+					"address":	40007
+				}, {
+					"tag":	"uint64_hold_read",
+					"type":	"uint64",
+					"rw_access":	"rw",
+					"address":	40009
+				}, {
+					"tag":	"int64_hold_read",
+					"type":	"int64",
+					"rw_access":	"rw",
+					"variableRangeConversion" : 0.1,
+					"address":	40009
+				}, {
+					"tag":	"double_read",
+					"type":	"double",
+					"rw_access":	"r",
+					"doubleDigit":	3,
+					"address":	40013
+				}, {
+					"tag":	"read_bit",
+					"type":	"bool",
+					"rw_access":	"r",
+					"bitDigit":	13,
+					"address":	40004
+				}]
+		}]
+}
